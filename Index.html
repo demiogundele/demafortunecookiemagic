@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DEMA Soirée Fortune Cookie</title>
+  <style>
+    body {
+      font-family:'Gill Sans', 'Gill Sans MT', 'Myriad Pro', 'DejaVu Sans Condensed', Helvetica, Arial, 'sans-serif';
+      background: #fdf6e3;
+      text-align: center;
+      padding: 50px;
+    }
+
+    h1 {
+      color: #b58900;
+      font-size: 60px;
+    }
+
+    h2 {
+      font-size: 18px;
+    }
+
+    #nameInput {
+      background-color: #f9f9f9;
+      border: 2px solid #ccc;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 16px;
+      margin: 10px;
+      width: 250px;
+      outline: none;
+      color: #333;
+      transition: 0.3s;
+    }
+
+    #nameInput:focus {
+      border-color: #80ffff;
+      box-shadow: 0 0 8px rgba(128, 255, 255, 0.6);
+    }
+
+    #fortune-btn {
+      position: relative;
+      background: linear-gradient(45deg, #ff80ff, #80ffff);
+      color: #black;
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+    }
+
+    #fortune-btn::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.7), transparent);
+      animation: sparkle 2s linear infinite;
+      z-index: 0;
+    }
+
+    #fortune-btn span {
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes sparkle {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    #fortune-btn:hover {
+      transform: scale(1.07);
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+    }
+
+    #fortune {
+      margin-top: 30px;
+      font-size: 40px;
+      color: #9E1012;
+    }
+
+    #feedback-link {
+      display: none;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>&nbsp; 🥠 DEMA Soirée Fortune Cookie &nbsp;🥠</h1>
+  <h2><em>Enter your name to receive a personalized fortune on how your night will go:</em></h2>
+
+  <input type="text" id="nameInput" placeholder="Your name here..." />
+
+  <button id="fortune-btn" onclick="generateFortune()"><span>✨ Get My Fortune ✨</span></button>
+
+  <div id="fortune"></div>
+
+  <div id="feedback-link">
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSd5vpT7RCzM6C5MIW6-goEDgeOl7kPKV3vUigiX_xmKLY60mw/viewform?usp=dialog" target="_blank">
+      <h2>Shhhhh...Click me after the event.👀
+      <br>Fill this out for a chance to win an Amazon giftcard</h2>
+    </a>
+  </div>
+
+  <script>
+    const fortunes = [
+      "Your next tech adventure begins with a handshake at a soirée.",
+      "The connection you make this evening may be your most valuable partnership.",
+      "A business solution will be born from tonight's discussions.",
+      "The connection you seek will be at the next DEMA event.",
+      "A technological breakthrough awaits in an unexpected collaboration.",
+      "Your LinkedIn connections will grow at an upcoming gala.",
+      "Innovation flows where elegant gatherings and brilliant minds meet.",
+      "The mentor you need will introduce themselves at your next soirée.",
+      "A new connection will spark unexpected joy.",
+      "Your smile will be someone’s favorite memory.",
+      "You will dance like no one’s watching—and they’ll love it.",
+      "A compliment you give tonight will change someone’s day.",
+      "You’ll discover a hidden talent before the night ends.",
+      "The stars are aligned for unforgettable moments.",
+      "A new mentor will guide your path when you least expect it.",
+      "The key to opportunity hides in a casual conversation.",
+      "Your aura grows brightest when meeting new people.",
+      "One introduction tonight may alter the course of your career.",
+      "In the quiet of conversation, guidance reveals itself.",
+      "The friend you make tonight may last beyond graduation.",
+      "A mentor’s wisdom is a bridge you didn’t know you needed.",
+      "The answer you seek begins with a single question.",
+      "Your curiosity will make you unforgettable.",
+      "Your LinkedIn requests will outnumber your Tinder matches this week.",
+      "You will meet someone who pretends to remember your name. Play along. Don’t worry, they forgot your name the second you said it too.",
+      "One genuine conversation is worth more than 100 business cards.",
+      "Your kindness will echo long after this event is over.",
+      "Sometimes your greatest achievement can be as simple as making a new friend tonight.",
+      "Even one little compliment could spark a wonderful new connection.",
+      "Curiosity is contagious - don’t hold back that burning question.",
+      "Don't fret if you cannot make a connection tonight... events such as these are not few in number - many more await you this year!",
+      "The key to your future opportunities may be somewhere (or someone!) in this room.",
+      "Your mind is full of bold, creative ideas - don’t hold them back.",
+      "You will be held hostage by a dedicated team of students with many more exciting events planned for this year!",
+      "Tonight's connections will foster tomorrow's successes.",
+      "A spectacular year with DEMA is just around the corner!",
+      "One of the speakers will give you powerful advice... You just won't realize it... Yet.",
+      "Don't be afraid to use your voice, you've got this!",
+      "Tonight's the night... opportunity knocks.",
+      "Keep your friends close, and your new connections closer."
+    ];
+
+    function generateFortune() {
+      const name = document.getElementById("nameInput").value.trim();
+      if (!name) {
+        alert("Please enter your name!");
+        return;
+      }
+      const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+      document.getElementById("fortune").innerText = `${name}, your fortune for the night is: "${randomFortune}"`;
+      document.getElementById("feedback-link").style.display = "block";
+    }
+  </script>
+</body>
+</html>
